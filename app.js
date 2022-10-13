@@ -30,7 +30,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    'mongodb+srv://carterjmoore:ECY7lJbPzwk8yDi1@shareplace.w9aakxl.mongodb.net/places?retryWrites=true&w=majority'
+    'mongodb+srv://carterjmoore:ECY7lJbPzwk8yDi1@shareplace.w9aakxl.mongodb.net/share-place?retryWrites=true&w=majority'
   )
   .then(() => {
     app.listen(5000);
