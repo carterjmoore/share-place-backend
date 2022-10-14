@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const { validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 
@@ -85,8 +87,7 @@ const createPlace = async (req, res, next) => {
     description,
     address,
     location,
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
+    image: req.file.path,
     creator,
   });
 
@@ -98,7 +99,7 @@ const createPlace = async (req, res, next) => {
     user.places.push(createdPlace);
     await user.save({ session: sess });
 
-    sess.commitTransaction();
+    await sess.commitTransaction();
   } catch (err) {
     return next(new HttpError('Creating place failed, please try again.', 500));
   }
@@ -156,6 +157,8 @@ const deletePlace = async (req, res, next) => {
     return next(new HttpError('Could not find place for this id.', 404));
   }
 
+  const imagePath = place.image;
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -164,7 +167,11 @@ const deletePlace = async (req, res, next) => {
     place.creator.places.pull(place);
     await place.creator.save({ session: sess });
 
-    sess.commitTransaction();
+    fs.unlink(imagePath, (err) => {
+      console.log(err);
+    });
+
+    await sess.commitTransaction();
   } catch (err) {
     return next(
       new HttpError('Something went wrong, could not delete place.', 500)
