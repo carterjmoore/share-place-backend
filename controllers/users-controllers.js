@@ -103,7 +103,7 @@ const login = async (req, res, next) => {
 
   let isValidPassword = false;
   try {
-    isValidPassword = await bcrypt.compare(password);
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
   } catch (err) {
     return next(
       new HttpError(
