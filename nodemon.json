@@ -1,0 +1,9 @@
+{
+  "env": {
+    "DB_USER": "devuser",
+    "DB_PASSWORD": "devuser123",
+    "DB_NAME": "share-place-dev",
+    "GOOGLE_API_KEY": "AIzaSyChRvQ7RfUP-znIsIvkF6lwppHnA1xFj4U",
+    "JWT_KEY": "ivI3HoaBgt2pLWZU5YZLsm77XbSoj52FwZwQH8dh"
+  }
+}
